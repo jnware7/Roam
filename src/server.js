@@ -5,14 +5,20 @@ const port = process.env.PORT || 3000;
 app.use(express.static('src/public'));
 app.set('views', './src/views');
 
-// const handlebars = require('express-handlebars')
-// app.engine('.hbs', handlebars({extname:'hbs'}));
 app.set('view engine', 'hbs');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('splash', {title: "Welcome!"});
+  res.render('splash');
 });
+
+router.get('/signup', (req, res) => {
+  res.render('signup');
+});
+
+router.post('/signup', (req, res) => {
+  res.send('Signed in!')
+})
 
 app.use('/', router);
 
