@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const hbs = require('hbs')
+const {createUser} = require('./database')
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({extended: false}))
 
-// hbs.registerPartials(__dirname + "/src/views/partial")
 hbs.registerPartial('nav',`<header>
   <div class=".col-xs-12 .col-md-8"></div>
   <div class=".col-xs-6 .col-md-4">
@@ -35,7 +37,12 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-  res.send('Signed in!')
+  const username = req.body.username
+  const password = req.body.password
+  createUser(username, password)
+  .then(user=>{
+    console.log(user)
+  })
 })
 router.post('/login', (req, res) => {
   res.send('login in!')
