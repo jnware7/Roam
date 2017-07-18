@@ -2,8 +2,25 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const hbs = require('hbs')
-const {createUser} = require('./database')
+const {createUser, findByUsername} = require('./database')
 const bodyParser = require('body-parser')
+const {passport} = require('./auth')
+const cookieParser = require('cookie-parser')
+const cookieSession = require('cookie-session')
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(cookieParser())
+
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['domromdom','runsunfun'],
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
 app.use(bodyParser.urlencoded({extended: false}))
 
 hbs.registerPartial('nav',`<header>
@@ -37,16 +54,21 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
+  const username = req.body.username;
+  const password = req.body.password;
   createUser(username, password)
   .then(user=>{
     console.log(user)
-  })
-})
+  });
+});
+
 router.post('/login', (req, res) => {
-  res.send('login in!')
-})
+  const username = req.body.username;
+  findByUsername(username)
+  .then(user=>{
+    console.log("user==>", user)
+  });
+});
 
 app.use('/', router);
 
