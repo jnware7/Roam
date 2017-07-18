@@ -6,7 +6,7 @@ CREATE TABLE users(
   id SERIAL PRIMARY KEY,
   username TEXT,
   password TEXT,
-  user_image TEXT
+  user_image TEXT DEFAULT "/images/roam_profile_holder.png"
 );
 
 CREATE TABLE reviews(

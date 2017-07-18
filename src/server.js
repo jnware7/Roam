@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const hbs = require('hbs')
-const {createUser, findByUsername} = require('./database')
+const {createUser, findByUsername, getUserById , getReviewsByUserId,  getCurrentCityByUserId} = require('./database')
 const bodyParser = require('body-parser')
 const {passport} = require('./auth')
 const cookieParser = require('cookie-parser')
@@ -49,16 +49,42 @@ router.get('/', (req, res) => {
 router.get('/signup', (req, res) => {
   res.render('signup');
 });
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/profile/:userid', (req, res) => {
+    const userid = req.params.userid
+    console.log(userid)
+    Promise.all([
+      getUserById(userid),
+      getReviewsByUserId(userid),
+      getCurrentCityByUserId(userid)
+    ])
+    .then(results => {
+      const user = results[0]
+      const reviews = results[1]
+      const city = results[2]
+      console.log('reviews ==>',reviews)
+      res.render('profile', {
+        user: user,
+        reviews: reviews,
+        city: city
+      })
+    }).catch( err => {
+      console.log("error", err)
+    })
+})
+
 router.post('/signup', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  const userid = req.params.userid;
+
   createUser(username, password)
   .then(user=>{
-    console.log(user)
+    res.redirect('/profile/:userid')
   });
 });
 
@@ -66,6 +92,7 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/success',
   failureRedirect: '/failure'
 }))
+
 
 app.use('/', router);
 
