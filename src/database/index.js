@@ -31,6 +31,7 @@ const GET_CURRENT_USER_BY_CITY_ID = `SELECT city FROM reviews WHERE id = $1 LIMI
 const getCurrentCityByUserId =(users_id) => {
   return db.one(GET_CURRENT_USER_BY_CITY_ID,[users_id])
 }
+
 module.exports = {
   createUser,
   findByUsername,

@@ -13,11 +13,14 @@ passport.use(new LocalStrategy(
       }
       bcrypt.compare(password, user.password, (error, result) => {
         if (error) {
+          console.log('entered LC 1');
           return done(error)
         }
         if (!result) {
+          console.log('entered LC 2');
           return done(null, false)
         }
+        console.log('entered LC 3', user);
         return done(null, user)
       })
     })
@@ -25,12 +28,15 @@ passport.use(new LocalStrategy(
 )
 
 passport.serializeUser(function(user, done){
+  console.log('in serializeUser.  user is ->', user)
   done(null, user.username)
 })
 
 passport.deserializeUser(function(username,done){
+  console.log('in deserializeUser')
   findByUsername(username)
   .then(user =>{
+    console.log('in deserializeUser.  user is ->', user)
     done(null, user)
   })
 })

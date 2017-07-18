@@ -7,21 +7,16 @@ const bodyParser = require('body-parser')
 const {passport} = require('./auth')
 const cookieParser = require('cookie-parser')
 const cookieSession = require('cookie-session')
-
-
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(cookieParser())
-
-
-app.use(cookieSession({
-  name: 'session',
-  keys: ['domromdom','runsunfun'],
-  // Cookie Options
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}))
+const session = require('express-session')
 
 app.use(bodyParser.urlencoded({extended: false}))
+app.use(session({
+  secret: 'keyboard cat'
+}))
+app.use(cookieParser())
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 hbs.registerPartial('nav',`<header>
   <div class=".col-xs-12 .col-md-8"></div>
@@ -35,6 +30,17 @@ hbs.registerPartial('nav',`<header>
     </nav>
   </div>
 </header>`)
+hbs.registerPartial('loggedinnav',`<header>
+  <div class=".col-xs-12 .col-md-8"></div>
+  <div class=".col-xs-6 .col-md-4">
+    <nav>
+      <ul class="breadcrumb">
+        <li role="presentation" class="active"><a href="/profile/1">Profile</a></li>
+        <li role="presentation" class="active"><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>`)
 
 app.use(express.static('src/public'));
 app.set('views', './src/views');
@@ -43,6 +49,7 @@ app.set('view engine', 'hbs');
 const router = express.Router();
 
 router.get('/', (req, res) => {
+  console.log('in /, session is ->', req.user, req.session, req.passport)
   res.render('splash');
 });
 
@@ -54,9 +61,41 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.get('/profile/:userid', (req, res) => {
-    const userid = req.params.userid
-    console.log(userid)
+router.post('/signup', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const userid = req.params.userid;
+
+  createUser(username, password)
+  .then(user=>{
+    res.redirect('/profile')
+  });
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/profile',
+  failureRedirect: '/failure'
+}))
+
+router.use((req, res, next) => {
+  console.log('---> req.user:', req.user)
+  if(req.user) {
+    next()
+  } else {
+    res.redirect('/login')
+  }
+})
+
+router.get('/logout', (req,res) => {
+  req.logout()
+  res.redirect('/')
+})
+
+
+
+router.get('/profile', (req, res) => {
+  console.log('req.user',req.user)
+    const userid = req.user.id
     Promise.all([
       getUserById(userid),
       getReviewsByUserId(userid),
@@ -77,21 +116,7 @@ router.get('/profile/:userid', (req, res) => {
     })
 })
 
-router.post('/signup', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const userid = req.params.userid;
 
-  createUser(username, password)
-  .then(user=>{
-    res.redirect('/profile/:userid')
-  });
-});
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/success',
-  failureRedirect: '/failure'
-}))
 
 
 app.use('/', router);
