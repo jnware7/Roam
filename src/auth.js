@@ -4,39 +4,35 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
 passport.use(new LocalStrategy(
-  function(username, password, done){
-    console.log('password==>', password)
+  function(username, password, done) {
     findByUsername(username)
-    .then(user =>{
+    .then(result =>{
+      const user = result[0]
       if (!user) {
-        return done(null,false,{message:'Incorrect username.'})
+        return done(null, false, { message: 'Incorrect username.' })
       }
-      bcrypt.compare(password,user.password,(error,result) => {
-        console.log('result==>', result)
+      bcrypt.compare(password, user.password, (error, result) => {
         if (error) {
-          return done(err)
+          return done(error)
         }
         if (!result) {
-          return done(null,false)
+          return done(null, false)
         }
-        return done(null,user)
+        return done(null, user)
+      })
     })
-   })
- })
+  })
 )
 
-
-passport.serializeUser(function(user,done){
-  console.log('entered serializeUser', user);
-  done(null,user.user_name)
+passport.serializeUser(function(user, done){
+  done(null, user.username)
 })
 
 passport.deserializeUser(function(username,done){
-  console.log('entered deserializeUser', username)
-  dbusers.findByUsersName(username)
+  findByUsername(username)
   .then(user =>{
-    done(null,user)
+    done(null, user)
   })
 })
 
-module.exports = {passport}
+module.exports = { passport }

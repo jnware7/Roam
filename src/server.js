@@ -62,13 +62,10 @@ router.post('/signup', (req, res) => {
   });
 });
 
-router.post('/login', (req, res) => {
-  const username = req.body.username;
-  findByUsername(username)
-  .then(user=>{
-    console.log("user==>", user)
-  });
-});
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/success',
+  failureRedirect: '/failure'
+}))
 
 app.use('/', router);
 

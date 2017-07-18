@@ -15,7 +15,7 @@ const createUser = (username,password) => {
 
 const FIND_BY_USERNAME = `SELECT * FROM users WHERE username = $1`;
 const findByUsername = (username) => {
-  return db.one(FIND_BY_USERNAME, [username]);
+  return db.any(FIND_BY_USERNAME, [username]);
 };
 
 module.exports = {
