@@ -8,18 +8,18 @@
   <body>
     {{> loggedinnav}}
     <div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="{{user.user_image}}" alt="{{user.username}}">
-      <div class="caption">
-        <h3>{{user.username}}</h3>
-        {{#each reviews}}
-        <p>{{city}}</p>
-        <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a></p>
-        {{/each}}
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="{{user.user_image}}" alt="{{user.username}}">
+          <div class="caption">
+            <h3>{{user.username}}</h3>
+            {{#each reviews}}
+              <p>{{city}}</p>
+              <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a></p>
+            {{/each}}
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
   </body>
 </html>
