@@ -15,58 +15,35 @@
           <img src="{{user.user_image}}" alt="{{user.username}}">
           <div class="caption">
             <h3>{{user.username}}</h3>
-            {{#each reviews}}
-              <p>{{city}}</p>
-              <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a></p>
-            {{/each}}
+            <p>{{currentCity}}</p>
           </div>
+          <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a></p>
         </div>
       </div>
     </div>
 
-  </div>
-</div>
-<ul>
-
-
-<div class="media" style ="border:1px; black" display="block";>
-  <div class="media-left">
-    <a href="#" >
-      <img class="media-object" src="http://via.placeholder.com/150x150" alt="...">
-    </a>
-  </div>
-  <div class="media-body" style="width:600px;">
-    <h4 class="media-heading">Media heading</h4>
-    <p style="">  You smart, you loyal, you a genius. Don’t ever play yourself. The key is to drink coconut, fresh coconut, trust me. Egg whites, turkey sausage, wheat toast, water. Of course they don’t want us to eat our breakfast, so we are going to enjoy our breakfast. In life there will be road blocks but we will over come it. It’s important to use cocoa butter. It’s the key to more success, why not live smooth? Why live rough? You should never complain, complaining is a weak emotion, you got life, we breathing, we blessed. You should never complain, complaining is a weak emotion, you got life, we breathing, we blessed.
-    </p>
-  </div>
-  <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></p>
-</div>
-
-<div class="media" style ="border:1px; black" display="block";>
-  <div class="media-left">
-    <a href="#" >
-      <img class="media-object" src="http://via.placeholder.com/150x150" alt="...">
-    </a>
-  </div>
-  <div class="media-body" style="width:600px;">
-    <h4 class="media-heading">Media heading</h4>
-    <p style="">  You smart, you loyal, you a genius. Don’t ever play yourself. The key is to drink coconut, fresh coconut, trust me. Egg whites, turkey sausage, wheat toast, water. Of course they don’t want us to eat our breakfast, so we are going to enjoy our breakfast. In life there will be road blocks but we will over come it. It’s important to use cocoa butter. It’s the key to more success, why not live smooth? Why live rough? You should never complain, complaining is a weak emotion, you got life, we breathing, we blessed. You should never complain, complaining is a weak emotion, you got life, we breathing, we blessed.
-    </p>
-    <div><label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">   <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-</label>
-<label class="radio-inline">
-
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" > <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-</label>
-</div>
-  </div>
-  <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></p>
-</div>
-
-
-</ul>
+    {{#each reviews}}
+      <div class="media" style ="border:1px; black" display="block";>
+        <div class="media-left">
+          <a href="#" >
+            <img class="media-object" src="{{city_image}}" alt="...">
+          </a>
+        </div>
+        <div class="media-body" style="width:600px;">
+          <h4 class="media-heading">{{city}}</h4>
+          <p style="">{{tip}}</p>
+          <div>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" {{#if thumbs}}checked{{/if}}><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" {{#unless thumbs}}checked{{/unless}}><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            </label>
+          </div>
+        </div>
+        <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></p>
+      </div>
+    {{/each}}
 
   </body>
 </html>

@@ -27,9 +27,10 @@ const getReviewsByUserId = (users_id) => {
   return db.any(GET_REVIEWS_BY_USER_ID, [users_id])
 }
 
-const GET_CURRENT_USER_BY_CITY_ID = `SELECT city FROM reviews WHERE id = $1 LIMIT 1`
+const GET_CURRENT_CITY_BY_USER_ID = `SELECT city FROM reviews WHERE id = $1 LIMIT 1`
 const getCurrentCityByUserId =(users_id) => {
-  return db.one(GET_CURRENT_USER_BY_CITY_ID,[users_id])
+  return db.one(GET_CURRENT_CITY_BY_USER_ID,[users_id])
+    .then(result => result.city)
 }
 
 module.exports = {

@@ -13,7 +13,7 @@ CREATE TABLE reviews(
   id SERIAL PRIMARY KEY,
   city TEXT,
   tip TEXT,
-  city_image TEXT,
+  city_image TEXT DEFAULT "http://via.placeholder.com/150x150",
   users_id INT REFERENCES users,
   logged TIMESTAMP DEFAULT now(),
   thumbs BOOLEAN default true

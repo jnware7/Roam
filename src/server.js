@@ -103,12 +103,12 @@ router.get('/profile', (req, res) => {
     .then(results => {
       const user = results[0]
       const reviews = results[1]
-      const city = results[2]
+      const currentCity = results[2]
 
       res.render('profile', {
         user: user,
         reviews: reviews,
-        city: city
+        currentCity: currentCity
       })
     }).catch( err => {
       console.error(err)
