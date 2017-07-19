@@ -36,7 +36,7 @@ hbs.registerPartial('loggedinnav', `<header>
   <div class=".col-xs-6 .col-md-4">
     <nav>
       <ul class="breadcrumb">
-        <li role="presentation" class="active"><a href="/profile/1">Profile</a></li>
+        <li role="presentation" class="active"><a href="/profile">Profile</a></li>
         <li role="presentation" class="active"><a href="/logout">Logout</a></li>
       </ul>
     </nav>
@@ -49,7 +49,11 @@ app.set('view engine', 'hbs');
 
 
 router.get('/', (req, res) => {
-  res.render('splash');
+  if (req.user) {
+    res.redirect('/profile')
+  } else {
+    res.render('splash');
+  }
 });
 
 router.get('/signup', (req, res) => {
