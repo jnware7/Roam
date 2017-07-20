@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const hbs = require('hbs');
 
 const { passport } = require('./auth');
-const {searchCity, getAllReviews,createUser, findByUsername, getUserById,
-  getReviewsByUserId, getCurrentCityByUserId, updateUser } = require('./database');
+const { searchCity, getAllReviews,createUser, findByUsername, getUserById,
+  getReviewsByUserId, getCurrentCityByUserId, updateUser, deleteReviewById } = require('./database');
 
 const app = express();
 const router = express.Router();
@@ -171,6 +171,14 @@ router.post('/profile/edit', (req, res) => {
     username: username,
     user_image: user_image
   })
+  .then(() => {
+    res.redirect('/profile')
+  })
+})
+
+router.get('/review/delete/:id', (req, res) => {
+  const id = req.params.id
+  deleteReviewById(id)
   .then(() => {
     res.redirect('/profile')
   })

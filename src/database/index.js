@@ -49,6 +49,11 @@ const searchCity = (searchQuery) => {
   return db.any(SEARCH_CITY, [`%${searchQuery.toLowerCase().replace(/\s+/,'%')}%`])
 }
 
+const DELETE_REVIEW = `DELETE FROM reviews WHERE id=$1 RETURNING *`
+const deleteReviewById = (reviewId) => {
+  return db.one(DELETE_REVIEW, [reviewId])
+}
+
 module.exports = {
   searchCity,
   getAllReviews,
@@ -57,5 +62,6 @@ module.exports = {
   getUserById,
   getReviewsByUserId,
   getCurrentCityByUserId,
-  updateUser
+  updateUser,
+  deleteReviewById
 };

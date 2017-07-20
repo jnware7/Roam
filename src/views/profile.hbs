@@ -27,7 +27,7 @@
 
     {{#each reviews}}
     <div class="container" style:"padding-left:150px; height:100%;">
-      <div class="media" style ="border-bottom: dashed  #D3D3D3; border-width: thin; display=block; ">
+      <div class="media" style ="border-bottom: dashed #D3D3D3; border-width: thin; display=block; ">
         <div class="media-left">
           <a href="#" >
             <img class="media-object" src="{{city_image}}" alt="..." style="width:150px; height:150px;">
@@ -38,15 +38,18 @@
           <p style="">{{tip}}</p>
           <p style=""><i>Posted : {{logged}}<i></p>
           <div>
-            <label class="radio-inline">
-              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" {{#if thumbs}}checked{{/if}}><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-            </label>
-            <label class="radio-inline">
-              <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" {{#unless thumbs}}checked{{/unless}}><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-            </label>
+            {{#if thumbs}}
+              <i style= "font-size:2rem;"class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            {{/if}}
+            {{#unless thumbs}}
+              <i style= "font-size:2rem;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            {{/unless}}
           </div>
         </div>
-        <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></p>
+        <p style="padding:10px;">
+          <a href="/review/edit/{{id}}" class="btn btn-primary" role="button">Edit</a>
+          <a href="/review/delete/{{id}}" class="btn btn-danger" role="button">Delete</a>
+        </p>
       </div>
     </div>
     {{/each}}
