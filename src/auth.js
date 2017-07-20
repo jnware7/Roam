@@ -1,4 +1,4 @@
-const {findByUsername} = require('./database')
+const { findByUsername, getUserById } = require('./database')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
@@ -24,11 +24,11 @@ passport.use(new LocalStrategy(
 )
 
 passport.serializeUser(function(user, done){
-  done(null, user.username)
+  done(null, user.id)
 })
 
-passport.deserializeUser(function(username,done){
-  findByUsername(username)
+passport.deserializeUser(function(userId, done){
+  getUserById(userId)
     .then(user =>{
       done(null, user)
     })

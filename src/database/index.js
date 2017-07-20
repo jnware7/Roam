@@ -28,9 +28,14 @@ const getReviewsByUserId = (users_id) => {
 }
 
 const GET_CURRENT_CITY_BY_USER_ID = `SELECT city FROM reviews WHERE id = $1 LIMIT 1`
-const getCurrentCityByUserId =(users_id) => {
+const getCurrentCityByUserId = (users_id) => {
   return db.one(GET_CURRENT_CITY_BY_USER_ID,[users_id])
     .then(result => result.city)
+}
+
+const UPDATE_USER = `UPDATE users SET (username, user_image) = ($1, $2) WHERE id = $3 RETURNING *`
+const updateUser = (options) => {
+  return db.one(UPDATE_USER, [options.username, options.user_image, options.id])
 }
 
 module.exports = {
@@ -38,5 +43,6 @@ module.exports = {
   findByUsername,
   getUserById,
   getReviewsByUserId,
-  getCurrentCityByUserId
+  getCurrentCityByUserId,
+  updateUser
 };

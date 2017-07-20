@@ -6,7 +6,7 @@ const hbs = require('hbs');
 
 const { passport } = require('./auth');
 const { createUser, findByUsername, getUserById,
-  getReviewsByUserId, getCurrentCityByUserId } = require('./database');
+  getReviewsByUserId, getCurrentCityByUserId, updateUser } = require('./database');
 
 const app = express();
 const router = express.Router();
@@ -93,26 +93,64 @@ router.get('/logout', (req,res) => {
 })
 
 router.get('/profile', (req, res) => {
-    const userid = req.user.id
+  const userid = req.user.id
 
-    Promise.all([
-      getUserById(userid),
-      getReviewsByUserId(userid),
-      getCurrentCityByUserId(userid)
-    ])
-    .then(results => {
-      const user = results[0]
-      const reviews = results[1]
-      const currentCity = results[2]
+  Promise.all([
+    getUserById(userid),
+    getReviewsByUserId(userid),
+    getCurrentCityByUserId(userid)
+  ])
+  .then(results => {
+    const user = results[0]
+    const reviews = results[1]
+    const currentCity = results[2]
 
-      res.render('profile', {
-        user: user,
-        reviews: reviews,
-        currentCity: currentCity
-      })
-    }).catch( err => {
-      console.error(err)
+    res.render('profile', {
+      user: user,
+      reviews: reviews,
+      currentCity: currentCity
     })
+  }).catch( err => {
+    console.error(err)
+  })
+})
+
+router.get('/profile/edit', (req, res) => {
+  const userid = req.user.id
+
+  Promise.all([
+    getUserById(userid),
+    getReviewsByUserId(userid),
+    getCurrentCityByUserId(userid)
+  ])
+  .then(results => {
+    const user = results[0]
+    const reviews = results[1]
+    const currentCity = results[2]
+
+    res.render('edit_profile', {
+      user: user,
+      reviews: reviews,
+      currentCity: currentCity
+    })
+  }).catch( err => {
+    console.error(err)
+  })
+})
+
+router.post('/profile/edit', (req, res) => {
+  const userid = req.user.id
+  const username = req.body.username
+  const user_image = req.body.user_image
+
+  updateUser({
+    id: userid,
+    username: username,
+    user_image: user_image
+  })
+  .then(() => {
+    res.redirect('/profile')
+  })
 })
 
 app.use('/', router);
