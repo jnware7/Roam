@@ -3,32 +3,27 @@
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <meta charset="utf-8">
-    <title>ROAM Edit {{user.username}}'s Profile</title>
-
+    <title>ROAM CITY REVIEWS</title>
   </head>
-  <body>
-    {{> loggedinnav}}
-    <div class="row">
-      <div class="col-sm-6 col-md-4"></div>
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="{{user.user_image}}" alt="{{user.username}}">
-          <form method="post" action="/profile/edit">
-            <label>Image URL</label>
-            <input style="width:70%; padding:10px; margin:10px;" value="{{user.user_image}}" name="user_image"></input>
-            <div class="caption">
-              <label>Username</label>
-              <input style="width:71%; padding:10px; margin:10px;" value="{{user.username}}" name="username"></input>
-            </div>
-            <p style="padding:10px;">
-              <input type="submit" class="btn btn-primary" role="button" value="Update"></input>
-            </p>
-          </form>
-        </div>
-      </div>
-    </div>
+  <body class="container-fluid">
+    {{> nav }}
+    <div class="jumbotron" style="background-image:url(/images/roam_cities.jpg); background-attachment: fixed;
+      background-position: 10% 99%;">
+      <h1 style="color:white;">Search City</h1>
+      <div class="row">
+      <div class="col-xs-6 col-md-4"></div>
+      <form class="col-xs-6 col-md-4" method="post" action="/cities">
+        <div  class="form-group">
 
+         <input style="width:400px;" type="text"  class="form-control" placeholder="Search City Review" name="city">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+        <div class="col-xs-6 col-md-4"></div>
+      </div>
+   </div>
     {{#each reviews}}
     <div class="container" style:"padding-left:150px; height:100%;">
       <div class="media" style ="border-bottom: dashed  #D3D3D3; border-width: thin; display=block; ">
@@ -40,19 +35,25 @@
         <div class="media-body" style="width:600px;">
           <h4 class="media-heading">{{city}}</h4>
           <p style="">{{tip}}</p>
+            <p style=""><i>Posted : {{logged}}<i></p>
           <div>
-            <label class="radio-inline">
+            {{#if thumbs}}
+              <i style= "font-size:2rem;"class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            {{/if}}
+            {{#unless thumbs}}
+              <i style= "font-size:2rem;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            {{/unless}}
+            <!-- <label class="radio-inline">
               <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" {{#if thumbs}}checked{{/if}}><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
             </label>
             <label class="radio-inline">
               <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" {{#unless thumbs}}checked{{/unless}}><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-            </label>
+            </label> -->
           </div>
         </div>
-        <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></p>
+
       </div>
     </div>
     {{/each}}
-
   </body>
 </html>

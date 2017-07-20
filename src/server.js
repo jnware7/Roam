@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const hbs = require('hbs');
 
 const { passport } = require('./auth');
-const { createUser, findByUsername, getUserById,
+const {searchCity, getAllReviews,createUser, findByUsername, getUserById,
   getReviewsByUserId, getCurrentCityByUserId, updateUser } = require('./database');
 
 const app = express();
@@ -26,7 +26,9 @@ hbs.registerPartial('nav', `<header>
       <li role="presentation" class="active"><a href="/">Home</a></li>
         <li role="presentation" class="active"><a href="/signup">Sign up</a></li>
         <li role="presentation" class="active"><a href="/login">Login</a></li>
+
       </ul>
+
     </nav>
   </div>
 </header>`);
@@ -43,10 +45,28 @@ hbs.registerPartial('loggedinnav', `<header>
   </div>
 </header>`);
 
+
 app.use(express.static('src/public'));
 app.set('views', './src/views');
 app.set('view engine', 'hbs');
 
+router.get('/cities', (req,res) => {
+  getAllReviews()
+  .then(reviews => {
+    res.render('cities',{
+      reviews:reviews
+    });
+  })
+})
+router.post('/cities',(req,res) => {
+  const searchQuery = req.body.city
+  searchCity(searchQuery)
+  .then(reviews =>{
+    res.render('cities',{
+      reviews:reviews
+    });
+  })
+})
 
 router.get('/', (req, res) => {
   if (req.user) {
@@ -57,7 +77,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-  res.render('signup');
+  getAllReviews()
+  .then(reviews => {
+    res.render('signup');
+  })
 });
 
 router.get('/login', (req, res) => {

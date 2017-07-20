@@ -13,6 +13,11 @@ const createUser = (username,password) => {
   });
 };
 
+const GET_ALL_REVIEWS = `SELECT * FROM reviews`;
+const getAllReviews = () => {
+  return db.any(GET_ALL_REVIEWS, []);
+};
+
 const FIND_BY_USERNAME = `SELECT * FROM users WHERE username = $1`;
 const findByUsername = (username) => {
   return db.one(FIND_BY_USERNAME, [username]);
@@ -38,7 +43,15 @@ const updateUser = (options) => {
   return db.one(UPDATE_USER, [options.username, options.user_image, options.id])
 }
 
+
+const SEARCH_CITY = `SELECT * FROM reviews WHERE lower(city) LIKE $1::text`
+const searchCity = (searchQuery) => {
+  return db.any(SEARCH_CITY, [`%${searchQuery.toLowerCase().replace(/\s+/,'%')}%`])
+}
+
 module.exports = {
+  searchCity,
+  getAllReviews,
   createUser,
   findByUsername,
   getUserById,

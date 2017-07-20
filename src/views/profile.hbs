@@ -26,7 +26,8 @@
     </div>
 
     {{#each reviews}}
-      <div class="media" style ="border:1px; black" display="block";>
+    <div class="container" style:"padding-left:150px; height:100%;">
+      <div class="media" style ="border-bottom: dashed  #D3D3D3; border-width: thin; display=block; ">
         <div class="media-left">
           <a href="#" >
             <img class="media-object" src="{{city_image}}" alt="..." style="width:150px; height:150px;">
@@ -35,6 +36,7 @@
         <div class="media-body" style="width:600px;">
           <h4 class="media-heading">{{city}}</h4>
           <p style="">{{tip}}</p>
+          <p style=""><i>Posted : {{logged}}<i></p>
           <div>
             <label class="radio-inline">
               <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" {{#if thumbs}}checked{{/if}}><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
@@ -46,6 +48,7 @@
         </div>
         <p style="padding:10px;"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></p>
       </div>
+    </div>
     {{/each}}
 
 
