@@ -6,7 +6,8 @@ const hbs = require('hbs');
 
 const { passport } = require('./auth');
 const { searchCity, getAllReviews,createUser, findByUsername, getUserById,
-  getReviewsByUserId, getCurrentCityByUserId, updateUser, deleteReviewById } = require('./database');
+  getReviewsByUserId, getCurrentCityByUserId, updateUser, deleteReviewById,
+  getReviewById, updateReview } = require('./database');
 
 const app = express();
 const router = express.Router();
@@ -38,6 +39,7 @@ hbs.registerPartial('loggedinnav', `<header>
   <div class=".col-xs-6 .col-md-4">
     <nav>
       <ul class="breadcrumb">
+        <li role="presentation" class="active"><a href="/cities">City Search</a></li>
         <li role="presentation" class="active"><a href="/profile">Profile</a></li>
         <li role="presentation" class="active"><a href="/logout">Logout</a></li>
       </ul>
@@ -97,10 +99,16 @@ router.post('/signup', (req, res) => {
     });
 });
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/profile',
-  failureRedirect: '/failure'
-}))
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.render('login', {message: "Invalid Username or Password"}); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/profile');
+    });
+  })(req, res, next);
+});
 
 router.use((req, res, next) => {
   if(req.user) {
@@ -179,6 +187,31 @@ router.post('/profile/edit', (req, res) => {
 router.get('/review/delete/:id', (req, res) => {
   const id = req.params.id
   deleteReviewById(id)
+  .then(() => {
+    res.redirect('/profile')
+  })
+})
+
+router.get('/review/edit/:id', (req, res) => {
+  const reviewId = req.params.id
+  getReviewById(reviewId)
+  .then((review) => {
+    res.render('edit_review', review)
+  })
+})
+
+router.post('/review/edit/:id', (req, res) => {
+  const id = req.params.id
+  const city = req.body.city
+  const tip = req.body.tip
+  const city_image = req.body.city_image
+
+  updateReview({
+    id: id,
+    city: city,
+    tip: tip,
+    city_image: city_image
+  })
   .then(() => {
     res.redirect('/profile')
   })

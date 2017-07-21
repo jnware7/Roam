@@ -20,6 +20,9 @@ passport.use(new LocalStrategy(
         return done(null, user)
       })
     })
+    .catch( error => {
+      return done(null, false, { message: 'Incorrect username.' })
+    })
   })
 )
 
