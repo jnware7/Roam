@@ -64,6 +64,12 @@ const updateReview = (options) => {
   return db.one(UPDATE_REVIEW, [options.city, options.tip, options.city_image, options.thumbs, options.id])
 }
 
+const NEW_REVIEW = `INSERT INTO reviews (city, tip, city_image, thumbs, users_id) VALUES($1, $2, $3, $4, $5) RETURNING *`
+const newReview = (options) => {
+  console.log('options =>', options)
+  return db.one(NEW_REVIEW, [options.city, options.tip, options.city_image, options.thumbs, options.users_id])
+}
+
 module.exports = {
   searchCity,
   getAllReviews,
@@ -75,5 +81,6 @@ module.exports = {
   updateUser,
   deleteReviewById,
   getReviewById,
-  updateReview
+  updateReview,
+  newReview
 };

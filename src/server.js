@@ -7,7 +7,7 @@ const hbs = require('hbs');
 const { passport } = require('./auth');
 const { searchCity, getAllReviews,createUser, findByUsername, getUserById,
   getReviewsByUserId, getCurrentCityByUserId, updateUser, deleteReviewById,
-  getReviewById, updateReview } = require('./database');
+  getReviewById, updateReview, newReview } = require('./database');
 
 const app = express();
 const router = express.Router();
@@ -146,6 +146,10 @@ router.get('/profile', (req, res) => {
   })
 })
 
+router.get('/review/new', (req, res) => {
+  res.render('new_review')
+})
+
 router.get('/profile/edit', (req, res) => {
   const userid = req.user.id
 
@@ -209,6 +213,25 @@ router.post('/review/edit/:id', (req, res) => {
 
   updateReview({
     id: id,
+    city: city,
+    tip: tip,
+    city_image: city_image,
+    thumbs: thumbs
+  })
+  .then(() => {
+    res.redirect('/profile')
+  })
+})
+
+router.post('/review/new', (req, res) => {
+  const users_id = req.user.id
+  const city = req.body.city
+  const tip = req.body.tip
+  const city_image = req.body.city_image
+  const thumbs = req.body.thumbs
+
+  newReview({
+    users_id: users_id,
     city: city,
     tip: tip,
     city_image: city_image,

@@ -9,8 +9,13 @@
   </head>
   <body>
     {{> loggedinnav}}
+      <div class="col-sm-2 col-md-4">
+    <a href="/review/new" type="button" class="btn btn-primary btn-lg">New Review</a>
+    </div>
     <div class="row">
-      <div class="col-sm-6 col-md-4"></div>
+
+
+
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
           <img src="{{user.user_image}}" alt="{{user.username}}">
@@ -19,10 +24,12 @@
             <p>{{currentCity}}</p>
           </div>
           <p style="padding:10px;">
-            <a href="/profile/edit" class="btn btn-primary" role="button">Edit</a>
+            <a href="/profile/edit" class="btn btn-primary" role="button">Edit Profile</a>
           </p>
         </div>
       </div>
+
+
     </div>
 
     {{#each reviews}}
@@ -36,7 +43,7 @@
         <div class="media-body" style="width:600px;">
           <h4 class="media-heading">{{city}}</h4>
           <p style="">{{tip}}</p>
-          <p style=""><i>Posted : {{logged}}<i></p>
+          <p style=""><i>Posted : {{logged}}</i></p>
           <div>
             {{#if thumbs}}
               <i style= "font-size:2rem;"class="fa fa-thumbs-o-up" aria-hidden="true"></i>
@@ -52,6 +59,7 @@
         </p>
       </div>
     </div>
+
     {{/each}}
 
 
