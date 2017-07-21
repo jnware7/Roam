@@ -205,12 +205,14 @@ router.post('/review/edit/:id', (req, res) => {
   const city = req.body.city
   const tip = req.body.tip
   const city_image = req.body.city_image
+  const thumbs = req.body.thumbs
 
   updateReview({
     id: id,
     city: city,
     tip: tip,
-    city_image: city_image
+    city_image: city_image,
+    thumbs: thumbs
   })
   .then(() => {
     res.redirect('/profile')

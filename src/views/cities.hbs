@@ -38,10 +38,12 @@
             <p style=""><i>Posted : {{logged}}<i></p>
           <div>
             {{#if thumbs}}
-              <i style= "font-size:2rem;"class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+              <i style= "font-size:2rem; color:green; "class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+              Recommended
             {{/if}}
             {{#unless thumbs}}
-              <i style= "font-size:2rem;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+              <i style= "font-size:2rem; color:red;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+              Not Recommended
             {{/unless}}
           </div>
         </div>

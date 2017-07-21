@@ -41,12 +41,10 @@
             </div>
 
             <div class="form-group">
-              <div class="col-sm-7">
-                <form>
-                <input type="radio" name="true" value="true"><i style="font-size: 3rem;" class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                  <div class="col-sm-7"></div>
-                <input type="radio" name="false" value="false"> <i style="font-size: 3rem;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-              </form>
+             <label class="col-sm-2 control-label">Like</label>
+               <div class="col-sm-7">
+                <input  value="true" type="radio" name="thumbs" {{#if thumbs}} checked {{/if}}> <i style="font-size: 3rem;" class="fa fa-thumbs-o-up" aria-hidden="true" ></i>
+                <input value="false" type="radio" name="thumbs" {{#unless thumbs}} checked {{/unless}}> <i style="font-size: 3rem;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
               </div>
             </div>
 

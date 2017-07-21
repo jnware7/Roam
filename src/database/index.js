@@ -59,9 +59,9 @@ const getReviewById = (reviewId) => {
   return db.one(GET_REVIEW_BY_ID, [reviewId])
 }
 
-const UPDATE_REVIEW = `UPDATE reviews SET (city, tip, city_image) = ($1, $2, $3) where id = $4 RETURNING *`
+const UPDATE_REVIEW = `UPDATE reviews SET (city, tip, city_image, thumbs) = ($1, $2, $3, $4) where id = $5 RETURNING *`
 const updateReview = (options) => {
-  return db.one(UPDATE_REVIEW, [options.city, options.tip, options.city_image, options.id])
+  return db.one(UPDATE_REVIEW, [options.city, options.tip, options.city_image, options.thumbs, options.id])
 }
 
 module.exports = {
