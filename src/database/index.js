@@ -13,7 +13,7 @@ const createUser = (username,password) => {
   });
 };
 
-const GET_ALL_REVIEWS = `SELECT * FROM reviews`;
+const GET_ALL_REVIEWS = `SELECT * FROM reviews ORDER BY logged DESC`;
 const getAllReviews = () => {
   return db.any(GET_ALL_REVIEWS, []);
 };
@@ -27,13 +27,15 @@ const GET_USER_BY_ID = `SELECT * FROM users WHERE id = $1`
 const getUserById = (id) => {
   return db.one(GET_USER_BY_ID, [id])
 }
-const GET_REVIEWS_BY_USER_ID = `SELECT * FROM reviews WHERE users_id = $1`
+const GET_REVIEWS_BY_USER_ID = `SELECT * FROM reviews WHERE users_id = $1 ORDER BY logged DESC`
 const getReviewsByUserId = (users_id) => {
+  console.log(GET_REVIEWS_BY_USER_ID)
   return db.any(GET_REVIEWS_BY_USER_ID, [users_id])
 }
 
-const GET_CURRENT_CITY_BY_USER_ID = `SELECT city FROM reviews WHERE id = $1 LIMIT 1`
+const GET_CURRENT_CITY_BY_USER_ID = `SELECT city FROM reviews WHERE users_id = $1 ORDER BY logged DESC LIMIT 1 `
 const getCurrentCityByUserId = (users_id) => {
+
   return db.one(GET_CURRENT_CITY_BY_USER_ID,[users_id])
     .then(result => result.city)
 }
@@ -66,7 +68,6 @@ const updateReview = (options) => {
 
 const NEW_REVIEW = `INSERT INTO reviews (city, tip, city_image, thumbs, users_id) VALUES($1, $2, $3, $4, $5) RETURNING *`
 const newReview = (options) => {
-  console.log('options =>', options)
   return db.one(NEW_REVIEW, [options.city, options.tip, options.city_image, options.thumbs, options.users_id])
 }
 
