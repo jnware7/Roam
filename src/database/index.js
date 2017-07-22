@@ -27,16 +27,16 @@ const GET_USER_BY_ID = `SELECT * FROM users WHERE id = $1`
 const getUserById = (id) => {
   return db.one(GET_USER_BY_ID, [id])
 }
-const GET_REVIEWS_BY_USER_ID = `SELECT * FROM reviews WHERE users_id = $1 ORDER BY logged DESC`
+const GET_REVIEWS_BY_USER_ID = `SELECT * FROM reviews WHERE users_id = $1`
 const getReviewsByUserId = (users_id) => {
   console.log(GET_REVIEWS_BY_USER_ID)
   return db.any(GET_REVIEWS_BY_USER_ID, [users_id])
 }
 
-const GET_CURRENT_CITY_BY_USER_ID = `SELECT city FROM reviews WHERE users_id = $1 ORDER BY logged DESC LIMIT 1 `
+const GET_CURRENT_CITY_BY_USER_ID = `SELECT city FROM reviews WHERE users_id = $1 `
 const getCurrentCityByUserId = (users_id) => {
 
-  return db.one(GET_CURRENT_CITY_BY_USER_ID,[users_id])
+  return db.any(GET_CURRENT_CITY_BY_USER_ID,[users_id])
     .then(result => result.city)
 }
 
