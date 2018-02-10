@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <title>ROAM {{user.username}}'s Profile</title>
+
+  </head>
+  <body>
+    {{> loggedinnav}}
+      <div class="col-sm-2 col-md-4">
+    <a href="/review/new" type="button" class="btn btn-primary btn-lg">New Review</a>
+    </div>
+    <div class="row">
+
+
+
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="{{user.user_image}}" alt="{{user.username}}">
+          <div class="caption">
+            <h3>{{user.username}}</h3>
+            <p><i>{{currentCity}}</i></p>
+          </div>
+          <p style="padding:10px;">
+            <a href="/profile/edit" class="btn btn-primary" role="button">Edit Profile</a>
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+
+    {{#each reviews}}
+    <div class="container" style:"padding-left:150px; height:100%;">
+      <div class="media" style ="border-bottom: dashed #D3D3D3; border-width: thin; display=block; ">
+        <div class="media-left">
+          <a href="#" >
+            <img class="media-object" src="{{city_image}}" alt="..." style="width:150px; height:150px; border-radius:5px;">
+          </a>
+        </div>
+        <div class="media-body" style="width:600px;">
+          <h4 class="media-heading">{{city}}</h4>
+          <p style="">{{tip}}</p>
+          <p style=""><i>Posted : {{logged}}</i></p>
+          <div>
+            {{#if thumbs}}
+              <i style= "font-size:2rem;"class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            {{/if}}
+            {{#unless thumbs}}
+              <i style= "font-size:2rem;" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            {{/unless}}
+          </div>
+        </div>
+        <p style="padding:10px;">
+          <a href="/review/edit/{{id}}" class="btn btn-primary" role="button">Edit</a>
+          <a href="/review/delete/{{id}}" class="btn btn-danger" role="button">Delete</a>
+        </p>
+      </div>
+    </div>
+
+    {{/each}}
+
+
+  </body>
+
+</html>

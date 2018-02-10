@@ -1,0 +1,36 @@
+{
+  "name": "Roam",
+  "version": "1.0.0",
+  "description": "You have been commissioned to build a travel community, code-named Roam for now, for users to share tips about their favorite locations around the world.",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server",
+    "init-db": "psql roam < schema.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnware7/Roam.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jnware7/Roam/issues"
+  },
+  "homepage": "https://github.com/jnware7/Roam#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "hbs": "^4.0.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg-promise": "^6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
